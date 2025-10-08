@@ -29,13 +29,13 @@ export class BuyerModel implements IBuyer {
   get email(): string {
     return this._email;
   }
-  Clear(): void {
+  clear(): void {
     this._payment = undefined;
     this._address = "";
     this._email = "";
     this._phone = "";
   }
-  Validate(): IValidationResult {
+  validate(): IValidationResult {
     return {
       payment: this._payment === undefined ? "Не задан метод оплаты" : null,
       email: this._email === "" ? "Укажите email" : null,

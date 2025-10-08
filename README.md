@@ -130,11 +130,11 @@ Presenter - презентер содержит основную логику п
 
 Методы: 
 
-* `get Products(): IProduct[]` - получение массива товаров из модели;
-* `set Products(products: IProduct[]): void` - сохранение массива товаров полученного в параметрах метода
+* `get products(): IProduct[]` - получение массива товаров из модели;
+* `set products(products: IProduct[]): void` - сохранение массива товаров полученного в параметрах метода
 * `getProduct(id: string): IProduct | undefined` - получение одного товара по его id
-* `get ProductDetailed(): IProduct | undefined` - получение товара для подробного отображения
-* `set ProductDetailed(product: IProduct)` - сохранение товара для подробного отображения
+* `get productDetailed(): IProduct | undefined` - получение товара для подробного отображения
+* `set productDetailed(product: IProduct)` - сохранение товара для подробного отображения
 
 #### Корзина
 
@@ -142,7 +142,7 @@ Presenter - презентер содержит основную логику п
 
 Методы:
 
-* `get Products(): IProduct[]` - получение массива товаров, которые находятся в корзине
+* `get products(): IProduct[]` - получение массива товаров, которые находятся в корзине
 * `addProduct(product: IProduct): void` - добавление товара, который был получен в параметре, в массив корзины
 * `deleteProduct(product: IProduct): void` - удаление товара, полученного в параметре из массива корзины
 * `clear(): void` - очистка корзины
@@ -165,8 +165,8 @@ Presenter - презентер содержит основную логику п
 * `get address(): string` - получить адреc
 * `get phone(): string` - получить телефон
 * `get email(): string` - получить email
-* `Clear(): void` - очистка данных покупателя
-* `Validate(): ValidationResult` - валидация
+* `clear(): void` - очистка данных покупателя
+* `validate(): ValidationResult` - валидация
 
 ### Слой коммуникации
 

@@ -3,7 +3,7 @@ import { IProduct } from "../../types"
 export class BasketModel {
   protected _products: IProduct[] = [];  
 
-  get Products(): IProduct[] {
+  get products(): IProduct[] {
     return this._products;
   }
   addProduct(product: IProduct): void {
@@ -22,6 +22,6 @@ export class BasketModel {
     return this._products.length;
   }
   isInBasket(id: string): boolean {
-    return this._products.findIndex(item => item.id === id) != -1;
+    return this._products.some(item => item.id === id);
   }
 }

@@ -10,6 +10,10 @@
     padding: 0;
     margin: 0;
     flex-grow: 1;
+
+    &-disabled {
+      opacity: 0.25;
+    }
   }
 
   &__item {

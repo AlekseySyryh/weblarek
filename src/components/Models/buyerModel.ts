@@ -1,21 +1,28 @@
 import { IBuyer, TPayment, IValidationResult } from "../../types";
+import { IEvents } from "../base/Events";
 
 export class BuyerModel implements IBuyer {
-  protected _payment: TPayment = undefined;
-  protected _email: string = "";
-  protected _phone: string = "";
-  protected _address: string = "";
+  private _payment: TPayment = undefined;
+  private _email: string = "";
+  private _phone: string = "";
+  private _address: string = "";
+  constructor(private events: IEvents) {}
+
   set payment(payment: TPayment) {
     this._payment = payment;
+    this.events.emit('buyer:changed');
   }
   set address(address: string) {
     this._address = address;
+    this.events.emit('buyer:changed');
   }
   set phone(phone: string) {
     this._phone = phone;
+    this.events.emit('buyer:changed');
   }
   set email(email: string) {
     this._email = email;
+    this.events.emit('buyer:changed');
   }
   get payment(): TPayment {
     return this._payment;
@@ -34,6 +41,7 @@ export class BuyerModel implements IBuyer {
     this._address = "";
     this._email = "";
     this._phone = "";
+    this.events.emit('buyer:changed');
   }
   validate(): IValidationResult {
     return {

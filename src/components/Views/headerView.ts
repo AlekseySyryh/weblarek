@@ -1,6 +1,7 @@
 import { Component } from "../base/Component";
 import { ensureElement } from "../../utils/utils";
 import { IEvents } from "../base/Events";
+import { ViewEvents } from "../../types";
 
 interface HeaderData {
   counter: number;
@@ -19,7 +20,7 @@ export class HeaderView extends Component<HeaderData> {
       '.header__basket-counter', container);
       
     this.basketButtonElement.addEventListener('click', () =>
-      this.events.emit('header:basketclick')
+      this.events.emit(ViewEvents.headerBasketClick)
     );
   }
 

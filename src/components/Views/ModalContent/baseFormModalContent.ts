@@ -1,4 +1,4 @@
-import { IValidationResult } from "../../../types";
+import { IValidationResult, ViewEvents } from "../../../types";
 import { ensureElement } from "../../../utils/utils";
 import { Component } from "../../base/Component";
 import { IEvents } from "../../base/Events";
@@ -27,9 +27,11 @@ export abstract class BaseFormModalContent<T extends BaseFormData> extends Compo
       this.errorElement = ensureElement<HTMLElement>('.form__errors', container);
 
       this.submitButton = ensureElement<HTMLButtonElement>('button[type="submit"]', container);
-      this.submitButton.addEventListener('click', ev => {
+      
+      
+      this.container.addEventListener('submit', ev => {
         ev.preventDefault();
-        this.Submit();
+        this.submit();
       });
   }
 
@@ -45,9 +47,9 @@ export abstract class BaseFormModalContent<T extends BaseFormData> extends Compo
     }
   }
 
-  protected OnChanged(field: string, newValue: string){
-    this.events.emit<OnChanged>(`input:changed`,{fieldName: field, newValue: newValue});
+  protected onChanged(field: string, newValue: string){
+    this.events.emit<OnChanged>(ViewEvents.inputChanged, {fieldName: field, newValue: newValue});
   }
 
-  protected abstract Submit(): void;
+  protected abstract submit(): void;
 }

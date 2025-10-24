@@ -1,4 +1,4 @@
-import { TPayment } from "../../../types";
+import { TPayment, ViewEvents } from "../../../types";
 import { ensureElement } from "../../../utils/utils";
 import { IEvents } from "../../base/Events";
 import { BaseFormData, BaseFormModalContent } from "./baseFormModalContent";
@@ -19,17 +19,17 @@ export class OrderFormModalContent extends BaseFormModalContent<OrderFormData> {
 
     this.addressElement = ensureElement<HTMLInputElement>('input[name="address"]', container);
     this.addressElement.addEventListener('input', () => {
-      this.OnChanged('address', this.addressElement.value);
+      this.onChanged('address', this.addressElement.value);
     } );
 
     this.cardButton = ensureElement<HTMLButtonElement>('button[name="card"]', container);
     this.cardButton.addEventListener('click', () => {
-      this.OnChanged('payment', 'card');
+      this.onChanged('payment', 'card');
     });
 
     this.cashButton = ensureElement<HTMLButtonElement>('button[name="cash"]', container);
     this.cashButton.addEventListener('click', () => {
-      this.OnChanged('payment', 'cash');
+      this.onChanged('payment', 'cash');
     });
   }
 
@@ -51,7 +51,7 @@ export class OrderFormModalContent extends BaseFormModalContent<OrderFormData> {
     }
   }
 
-  protected Submit(): void {
-      this.events.emit('order:submit');
+  protected submit(): void {
+      this.events.emit(ViewEvents.orderSubmit);
   }
 }

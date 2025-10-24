@@ -1,4 +1,4 @@
-import { IBuyer, TPayment, IValidationResult } from "../../types";
+import { IBuyer, TPayment, IValidationResult, ModelEvents } from "../../types";
 import { IEvents } from "../base/Events";
 
 export class BuyerModel implements IBuyer {
@@ -10,19 +10,19 @@ export class BuyerModel implements IBuyer {
 
   set payment(payment: TPayment) {
     this._payment = payment;
-    this.events.emit('buyer:changed');
+    this.events.emit(ModelEvents.buyerChanged);
   }
   set address(address: string) {
     this._address = address;
-    this.events.emit('buyer:changed');
+    this.events.emit(ModelEvents.buyerChanged);
   }
   set phone(phone: string) {
     this._phone = phone;
-    this.events.emit('buyer:changed');
+    this.events.emit(ModelEvents.buyerChanged);
   }
   set email(email: string) {
     this._email = email;
-    this.events.emit('buyer:changed');
+    this.events.emit(ModelEvents.buyerChanged);
   }
   get payment(): TPayment {
     return this._payment;
@@ -41,7 +41,7 @@ export class BuyerModel implements IBuyer {
     this._address = "";
     this._email = "";
     this._phone = "";
-    this.events.emit('buyer:changed');
+    this.events.emit(ModelEvents.buyerChanged);
   }
   validate(): IValidationResult {
     return {

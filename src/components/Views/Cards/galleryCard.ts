@@ -1,3 +1,4 @@
+import { ViewEvents } from "../../../types";
 import { IEvents } from "../../base/Events";
 import { ImageCard, ImageCardData } from "./imageCard";
 
@@ -8,6 +9,6 @@ export class GalleryCard extends ImageCard<ImageCardData> {
   }
 
   protected onButtonClick(): void {
-    this.emit('gallery:click');
+    this.emit(ViewEvents.galleryClick);
   }
 }

@@ -1,4 +1,4 @@
-import { IProduct } from "../../types";
+import { IProduct, ModelEvents } from "../../types";
 import { IEvents } from "../base/Events";
 
 export class CatalogModel {
@@ -13,7 +13,7 @@ export class CatalogModel {
   } 
   set products(products: IProduct[]) {
     this._items = products;
-    this.events.emit('products:changed');
+    this.events.emit(ModelEvents.productsChanged);
   }
 
   getProduct(id: string): IProduct | undefined {
@@ -24,6 +24,6 @@ export class CatalogModel {
   }
   set productDetailed(product: IProduct){
     this._detailedItem = product;
-    this.events.emit('product:selected');
+    this.events.emit(ModelEvents.productSelected);
   }
 }

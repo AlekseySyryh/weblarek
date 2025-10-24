@@ -1,4 +1,4 @@
-import { IProduct } from "../../types"
+import { IProduct, ModelEvents } from "../../types"
 import { IEvents } from "../base/Events";
 
 export class BasketModel {
@@ -11,15 +11,15 @@ export class BasketModel {
   }
   addProduct(product: IProduct): void {
     this._products.push(product);
-    this.events.emit('basket:changed');
+    this.events.emit(ModelEvents.basketChanged);
   }
   deleteProduct(product: IProduct): void {
     this._products = this._products.filter(x => x.id !== product.id);
-    this.events.emit('basket:changed');
+    this.events.emit(ModelEvents.basketChanged);
   }
   clear(): void {
     this._products = [];
-    this.events.emit('basket:changed');
+    this.events.emit(ModelEvents.basketChanged);
   }
   getTotalPrice(): number {
     return this._products.reduce((total, item) => total + (item.price ?? 0), 0);

@@ -19,6 +19,7 @@ import { BuyerModel } from './components/Models/buyerModel';
 import { OnChanged } from './components/Views/ModalContent/baseFormModalContent';
 import { ContantactsFormModalContent } from './components/Views/ModalContent/contactsFormModalContent';
 import { SuccessWindow } from './components/Views/ModalContent/successModalContent';
+import { ModelEvents, ViewEvents } from './types';
 
 const api = new Api(API_URL);
 const dataSource = new DataSource(api);
@@ -48,7 +49,7 @@ let activeModal : null |
                   ContantactsFormModalContent 
 = null;
 
-function RenderFullProductWindow() {
+function renderFullProductWindow() {
   if (activeModal && !(activeModal instanceof FullCard))
   {
     //Уже открыто другое окно
@@ -86,7 +87,7 @@ function RenderFullProductWindow() {
     modalView.visible = true;
 }
 
-function RenderBasketWindow() {
+function renderBasketWindow() {
   if (activeModal && !(activeModal instanceof BasketModalContent))
   {
     return;//Уже открыто другое окно
@@ -111,13 +112,13 @@ function RenderBasketWindow() {
     }))
   }
   activeModal.render({
-    total: baketModel.getTotalCount(),
+    total: baketModel.getTotalPrice(),
     cards: cards
   });
   modalView.visible = true;
 }
 
-function RenderOrderWindow() {
+function renderOrderWindow() {
   if (activeModal && !(activeModal instanceof OrderFormModalContent)){
     return;
   }
@@ -134,7 +135,7 @@ function RenderOrderWindow() {
   modalView.visible = true;
 }
 
-function RenderContcatWindow() {
+function renderContcatWindow() {
   if (activeModal && !(activeModal instanceof ContantactsFormModalContent)){
     return;
   }
@@ -152,24 +153,24 @@ function RenderContcatWindow() {
 
 }
 
-events.on('basket:changed', () => {
+events.on(ModelEvents.basketChanged, () => {
   headerView.counter = baketModel.getTotalCount();
   if (activeModal instanceof FullCard) {
-    RenderFullProductWindow();
+    renderFullProductWindow();
   } else if (activeModal instanceof BasketModalContent) {
-    RenderBasketWindow();
+    renderBasketWindow();
   }
 });
 
-events.on('buyer:changed', () => {
+events.on(ModelEvents.buyerChanged, () => {
   if (activeModal instanceof OrderFormModalContent) {
-    RenderOrderWindow();
+    renderOrderWindow();
   } else if (activeModal instanceof ContantactsFormModalContent) {
-    RenderContcatWindow();
+    renderContcatWindow();
   }
 });
 
-events.on('products:changed', () => {
+events.on(ModelEvents.productsChanged, () => {
   const cards : HTMLElement[] = [];
   for (const product of catalogModel.products){
       const cardElement = cloneTemplate<HTMLElement>(catalogTemplate);
@@ -185,27 +186,27 @@ events.on('products:changed', () => {
   galleryView.cards = cards;
 });
 
-events.on('product:selected', () => {
-  RenderFullProductWindow();
+events.on(ModelEvents.productSelected, () => {
+  renderFullProductWindow();
 });
 
-events.on('header:basketclick', () => {
-  RenderBasketWindow();
+events.on(ViewEvents.headerBasketClick, () => {
+  renderBasketWindow();
 });
 
-events.on('modal:close', () => {
+events.on(ViewEvents.modalClose, () => {
     activeModal = null;
     modalView.visible = false;
 });
 
-events.on<IProductID>('basketcard:click', productId => {
+events.on<IProductID>(ViewEvents.basketCardClick, productId => {
   const product = catalogModel.getProduct(productId.id);
   if (product){
     baketModel.deleteProduct(product);
   }
 });
 
-events.on<IProductID>('fullcard:click', productId => {
+events.on<IProductID>(ViewEvents.fullCardClick, productId => {
   const product = catalogModel.getProduct(productId.id);
   if (product){
     if (baketModel.isInBasket(product.id)) {
@@ -216,14 +217,14 @@ events.on<IProductID>('fullcard:click', productId => {
   }
 });
 
-events.on<IProductID>('gallery:click', productId => {
+events.on<IProductID>(ViewEvents.galleryClick, productId => {
   const product = catalogModel.getProduct(productId.id);
   if (product != null){
     catalogModel.productDetailed = product;
   }
 });
 
-events.on<OnChanged>('input:changed', changeData => {
+events.on<OnChanged>(ViewEvents.inputChanged, changeData => {
   switch (changeData.fieldName) {
     case 'address':
       buyerModel.address = changeData.newValue;
@@ -249,17 +250,17 @@ events.on<OnChanged>('input:changed', changeData => {
   }
 });
 
-events.on('basket:submit', () => {
+events.on(ViewEvents.basketSubmit, () => {
   activeModal = null;
-  RenderOrderWindow();
+  renderOrderWindow();
 });
 
-events.on('order:submit', () => {
+events.on(ViewEvents.orderSubmit, () => {
   activeModal = null;
-  RenderContcatWindow();
+  renderContcatWindow();
 });
 
-events.on('contacts:submit',async () => {
+events.on(ViewEvents.contactsSubmit, async () => {
   try {
     const result = await dataSource.placeOrder({
       address: buyerModel.address,
@@ -287,7 +288,7 @@ events.on('contacts:submit',async () => {
     console.error(error);
   }});
 
-events.on('success:submit', () => {
+events.on(ViewEvents.successSubmit, () => {
   modalView.visible = false;
 });
 

@@ -1,3 +1,4 @@
+import { ViewEvents } from "../../../types";
 import { ensureElement } from "../../../utils/utils";
 import { Component } from "../../base/Component";
 import { IEvents } from "../../base/Events";
@@ -17,7 +18,7 @@ export class SuccessWindow extends Component<SuccessData>{
 
     this.closeButton = ensureElement<HTMLButtonElement>('.button', container);
     this.closeButton.addEventListener('click', () => {
-      this.event.emit('success:submit');
+      this.event.emit(ViewEvents.successSubmit);
     });
   }
 

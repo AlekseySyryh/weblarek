@@ -54,3 +54,23 @@ export interface IDataSource {
   getProducts(): Promise<IProductResponse>;
   placeOrder(data: IOrderData): Promise<IOrderResult>;
 }
+
+export enum ModelEvents {
+  basketChanged = 'basket:changed',
+  buyerChanged = 'buyer:changed',
+  productsChanged = 'products:changed',
+  productSelected = 'product:selected'
+}
+
+export enum ViewEvents {
+  headerBasketClick = 'header:basketclick',
+  modalClose = 'modal:close',
+  basketCardClick = 'basketcard:click',
+  fullCardClick = 'fullcard:click',
+  galleryClick = 'gallery:click',
+  inputChanged = 'input:changed',
+  basketSubmit = 'basket:submit',
+  orderSubmit = 'order:submit',
+  contactsSubmit = 'contacts:submit',
+  successSubmit = 'success:submit'
+}

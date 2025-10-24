@@ -1,3 +1,4 @@
+import { ViewEvents } from "../../../types";
 import { ensureElement } from "../../../utils/utils";
 import { IEvents } from "../../base/Events";
 import { BaseCard, BaseCardData} from "./baseCard";
@@ -19,7 +20,7 @@ export class BasketCard extends BaseCard<BasketCardData> {
   }
 
   private onButtonClick(): void {
-    this.emit('basketcard:click');
+    this.emit(ViewEvents.basketCardClick);
   }
 
   set index(index: number) {

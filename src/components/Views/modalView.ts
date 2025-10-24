@@ -1,3 +1,4 @@
+import { ViewEvents } from "../../types";
 import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 import { IEvents } from "../base/Events";
@@ -27,10 +28,14 @@ export class ModalView extends Component<ModalData> {
 
   set visible(isVisible: boolean){
     if (isVisible){
-      this.container.classList.add('modal_active');
+      if (!this.container.classList.contains('modal_active')) {
+        this.container.classList.add('modal_active');
+      }
     } else {
-      this.container.classList.remove('modal_active');
-      this.events.emit('modal:close');
+      if (this.container.classList.contains('modal_active')) {
+        this.container.classList.remove('modal_active');
+        this.events.emit(ViewEvents.modalClose);
+      }
     }
   }
 

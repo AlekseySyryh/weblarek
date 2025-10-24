@@ -1,3 +1,4 @@
+import { ViewEvents } from "../../../types";
 import { ensureElement } from "../../../utils/utils";
 import { IEvents } from "../../base/Events";
 import { ButtonOnCard } from "./buttonOnCard";
@@ -29,7 +30,7 @@ export class FullCard extends ImageCard<FullCardData> {
     }
 
     protected onButtonClick(): void {
-      this.emit('fullcard:click');
+      this.emit(ViewEvents.fullCardClick);
     }
 
     set buttonMode(buttonMode: ButtonMode) {

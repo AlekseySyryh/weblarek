@@ -1,3 +1,4 @@
+import { ViewEvents } from "../../../types";
 import { ensureElement } from "../../../utils/utils";
 import { IEvents } from "../../base/Events";
 import { BaseFormData, BaseFormModalContent } from "./baseFormModalContent";
@@ -17,12 +18,12 @@ export class ContantactsFormModalContent extends BaseFormModalContent<Contantact
 
     this.emailElement = ensureElement<HTMLInputElement>('input[name="email"]', container);
     this.emailElement.addEventListener('input', () => {
-      this.OnChanged('email', this.emailElement.value);
+      this.onChanged('email', this.emailElement.value);
     })
 
     this.phoneElement = ensureElement<HTMLInputElement>('input[name="phone"]', container);
     this.phoneElement.addEventListener('input', () => {
-      this.OnChanged('phone', this.phoneElement.value);
+      this.onChanged('phone', this.phoneElement.value);
     })
   }
   
@@ -34,7 +35,7 @@ export class ContantactsFormModalContent extends BaseFormModalContent<Contantact
     this.phoneElement.value = phone;
   }
 
-  protected Submit(): void {
-    this.events.emit('contacts:submit');
+  protected submit(): void {
+    this.events.emit(ViewEvents.contactsSubmit);
   }
 }

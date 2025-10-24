@@ -1,3 +1,4 @@
+import { ViewEvents } from "../../../types";
 import { ensureElement } from "../../../utils/utils";
 import { Component } from "../../base/Component";
 import { IEvents } from "../../base/Events";
@@ -16,7 +17,7 @@ export class BasketModalContent extends Component<BasketData> {
     
     this.submitButton = ensureElement<HTMLButtonElement>('.basket__button', container);
     this.submitButton.addEventListener('click', () => {
-      events.emit('basket:submit');
+      events.emit(ViewEvents.basketSubmit);
     })
 
     this.contentElement = ensureElement<HTMLElement>('.basket__list', container);
